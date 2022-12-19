@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+CORE_MBED_HASH=d18d04d
+API_HASH=e26862e
+
+set -e
+
+BASE_DIR=`pwd`
+API_DIR="${BASE_DIR}/cores/arduino"
+PATCHES_DIR="/patches"
+BUILD_VARIANTS=("NICLA" "PORTENTA_H7_M7")
+CORE_MBED_VERSION="3.5.1"
+
+curl -sSL "https://github.com/arduino/ArduinoCore-mbed/tarball/${CORE_MBED_HASH}" | tar --strip-components 1 -x -z
+curl -sSL "https://github.com/arduino/ArduinoCore-API/tarball/${API_HASH}" | tar --strip-components 1 -x -z -C "${API_DIR}" "arduino-ArduinoCore-API-${API_HASH}/api"
+
+set +e
+./mbed-os-to-arduino -a NOPE:NOPE
+set -e
+
+for p in `ls ${PATCHES_DIR}`
+do
+  patch -p1 -i "${PATCHES_DIR}/${p}"
+done
+
+for v in "${BUILD_VARIANTS[@]}"
+do
+  ./mbed-os-to-arduino "${v}:${v}"
+done
+
+cat <<EOF > package.json 
+{
+  "name": "framework-arduino-mbed",
+  "version": "${CORE_MBED_VERSION}",
+  "description": "Arduino framework supporting mbed-enabled boards",
+  "keywords": [
+    "framework",
+    "arduino",
+    "mbed"
+  ],
+  "homepage": "https://www.arduino.cc/reference/en",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arduino/ArduinoCore-mbed"
+  }
+}
+EOF
+tar -c -C / ace | gzip -9 - > "/dist/ArduinoCore-mbed-${CORE_MBED_VERSION}.tar.gz"

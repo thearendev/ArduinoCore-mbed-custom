@@ -1,0 +1,25 @@
+From c49a115d1e9ce9761bd77a9060fdf7d5c3c0c36d Mon Sep 17 00:00:00 2001
+From: Marco Marche <marco.marche@gmail.com>
+Date: Mon, 19 Dec 2022 09:21:30 +0100
+Subject: [PATCH] ...
+
+---
+ variants/NICLA/conf/mbed_app.json | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/variants/NICLA/conf/mbed_app.json b/variants/NICLA/conf/mbed_app.json
+index 31956088..4d239226 100644
+--- a/variants/NICLA/conf/mbed_app.json
++++ b/variants/NICLA/conf/mbed_app.json
+@@ -20,6 +20,8 @@
+       "target.mbed_app_start": "0x10000",
+       "target.components_add" : ["SPIF"],
+       "cordio.max-connections": 1,
++      "cordio.desired-att-mtu": 251,
++      "cordio.rx-acl-buffer-size": 255,
+       "ble.ble-role-central": false,
+       "ble.ble-role-observer": true,
+       "ble.ble-gap-max-advertising-sets": 1,
+-- 
+2.39.0.windows.1
+
