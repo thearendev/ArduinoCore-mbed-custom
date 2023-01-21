@@ -1,0 +1,25 @@
+From 200904ecaf9652bc154f17e17d88bff8c4d24a69 Mon Sep 17 00:00:00 2001
+From: Marco Marche <marco.marche@gnucoop.com>
+Date: Sat, 21 Jan 2023 11:47:30 +0100
+Subject: [PATCH] ...
+
+---
+ variants/NICLA/conf/mbed_app.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/variants/NICLA/conf/mbed_app.json b/variants/NICLA/conf/mbed_app.json
+index 4d239226..fe161d83 100644
+--- a/variants/NICLA/conf/mbed_app.json
++++ b/variants/NICLA/conf/mbed_app.json
+@@ -28,7 +28,7 @@
+       "ble.ble-gap-host-max-advertising-start-commands": 1,
+       "ble.ble-gap-host-privacy-resolved-cache-size": 1,
+       "ble.ble-feature-gatt-client": false,
+-      "ble.ble-feature-security": false,
++      "ble.ble-feature-security": true,
+       "ble.ble-feature-secure-connections": false,
+       "ble.ble-feature-signing": false,
+       "ble.ble-feature-whitelist": false,
+-- 
+2.37.1 (Apple Git-137.1)
+
