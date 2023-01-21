@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-CORE_MBED_HASH=d18d04d
-API_HASH=e26862e
+CORE_MBED_HASH=7819608
+API_HASH=844e4bf
 
 set -e
 
@@ -9,7 +9,7 @@ BASE_DIR=`pwd`
 API_DIR="${BASE_DIR}/cores/arduino"
 PATCHES_DIR="/patches"
 BUILD_VARIANTS=("NICLA" "PORTENTA_H7_M7")
-CORE_MBED_VERSION="3.5.1"
+CORE_MBED_VERSION="3.5.4"
 
 curl -sSL "https://github.com/arduino/ArduinoCore-mbed/tarball/${CORE_MBED_HASH}" | tar --strip-components 1 -x -z
 curl -sSL "https://github.com/arduino/ArduinoCore-API/tarball/${API_HASH}" | tar --strip-components 1 -x -z -C "${API_DIR}" "arduino-ArduinoCore-API-${API_HASH}/api"
