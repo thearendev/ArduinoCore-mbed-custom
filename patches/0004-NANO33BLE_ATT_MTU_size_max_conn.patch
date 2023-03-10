@@ -1,0 +1,27 @@
+From 5e6c330e9bbf2f5ea07b098e67771b09ce8ac01e Mon Sep 17 00:00:00 2001
+From: Marco Marche <marco.marche@gmail.com>
+Date: Fri, 10 Mar 2023 10:41:35 +0100
+Subject: [PATCH] nano33 ble
+
+---
+ variants/ARDUINO_NANO33BLE/conf/mbed_app.json | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/variants/ARDUINO_NANO33BLE/conf/mbed_app.json b/variants/ARDUINO_NANO33BLE/conf/mbed_app.json
+index 279ca880..56a814e1 100644
+--- a/variants/ARDUINO_NANO33BLE/conf/mbed_app.json
++++ b/variants/ARDUINO_NANO33BLE/conf/mbed_app.json
+@@ -11,7 +11,9 @@
+       "platform.default-serial-baud-rate": 115200,
+       "platform.callback-nontrivial": true,
+       "rtos.main-thread-stack-size": 32768,
+-      "cordio.max-connections": 5,
++      "cordio.max-connections": 1,
++      "cordio.desired-att-mtu": 251,
++      "cordio.rx-acl-buffer-size": 255,
+       "platform.all-stats-enabled": true,
+       "target.mbed_app_start": "0x10000"
+     }
+-- 
+2.39.2.windows.1
+
