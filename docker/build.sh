@@ -9,7 +9,7 @@ set -e
 BASE_DIR=`pwd`
 API_DIR="${BASE_DIR}/cores/arduino"
 PATCHES_DIR="/patches"
-BUILD_VARIANTS=("NICLA" "PORTENTA_H7_M7")
+BUILD_VARIANTS=("NICLA" "ARDUINO_NANO33BLE" "PORTENTA_H7_M7")
 CORE_MBED_VERSION="3.5.4"
 
 curl -sSL "https://github.com/arduino/ArduinoCore-mbed/tarball/${CORE_MBED_HASH}" | tar --strip-components 1 -x -z
