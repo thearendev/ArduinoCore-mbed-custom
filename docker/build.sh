@@ -10,7 +10,7 @@ BASE_DIR=`pwd`
 API_DIR="${BASE_DIR}/cores/arduino"
 PATCHES_DIR="/patches"
 BUILD_VARIANTS=("NICLA" "ARDUINO_NANO33BLE" "PORTENTA_H7_M7")
-CORE_MBED_VERSION="3.5.4"
+CORE_MBED_VERSION="3.5.5"
 
 curl -sSL "https://github.com/arduino/ArduinoCore-mbed/tarball/${CORE_MBED_HASH}" | tar --strip-components 1 -x -z
 curl -sSL "https://github.com/arduino/ArduinoCore-API/tarball/${API_HASH}" | tar --strip-components 1 -x -z -C "${API_DIR}" "arduino-ArduinoCore-API-${API_HASH}/api"
