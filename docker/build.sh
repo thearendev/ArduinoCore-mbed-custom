@@ -2,6 +2,7 @@
 
 CORE_MBED_HASH=7819608
 API_HASH=844e4bf
+MBED_OS_VERSION="mbed-os-6.16.0"
 
 set -e
 
@@ -14,8 +15,10 @@ CORE_MBED_VERSION="3.5.4"
 curl -sSL "https://github.com/arduino/ArduinoCore-mbed/tarball/${CORE_MBED_HASH}" | tar --strip-components 1 -x -z
 curl -sSL "https://github.com/arduino/ArduinoCore-API/tarball/${API_HASH}" | tar --strip-components 1 -x -z -C "${API_DIR}" "arduino-ArduinoCore-API-${API_HASH}/api"
 
+pip install `curl -sSL https://github.com/ARMmbed/mbed-os/raw/${MBED_OS_VERSION}/requirements.txt`
+
 set +e
-./mbed-os-to-arduino -a NOPE:NOPE
+./mbed-os-to-arduino -b "${MBED_OS_VERSION}" -a NOPE:NOPE
 set -e
 
 for p in `ls ${PATCHES_DIR}`
