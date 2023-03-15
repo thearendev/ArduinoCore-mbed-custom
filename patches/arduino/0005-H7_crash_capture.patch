@@ -1,0 +1,26 @@
+From 61a783877a799948a19d2ea0bec956fc675d756c Mon Sep 17 00:00:00 2001
+From: Marco Marche <marco.marche@gmail.com>
+Date: Wed, 15 Mar 2023 09:33:22 +0100
+Subject: [PATCH] ...
+
+---
+ variants/PORTENTA_H7_M7/conf/mbed_app.json | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/variants/PORTENTA_H7_M7/conf/mbed_app.json b/variants/PORTENTA_H7_M7/conf/mbed_app.json
+index 5ac9c9bb..829169ff 100644
+--- a/variants/PORTENTA_H7_M7/conf/mbed_app.json
++++ b/variants/PORTENTA_H7_M7/conf/mbed_app.json
+@@ -8,6 +8,9 @@
+       "platform.callback-nontrivial": true,
+       "platform.all-stats-enabled": true,
+       "platform.memory-tracing-enabled": true,
++      "platform.crash-capture-enabled": true,
++      "platform.error-reboot-max": 10,
++      "platform.fatal-error-auto-reboot-enabled": true,
+       "rtos.main-thread-stack-size": 32768,
+       "cordio.max-connections": 5,
+       "cellular.debug-at": true,
+-- 
+2.39.2.windows.1
+
