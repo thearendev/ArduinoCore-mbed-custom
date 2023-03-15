@@ -1,0 +1,44 @@
+From 94ebba5b1efcf62b3c3cb090a7b7521bc0e7204f Mon Sep 17 00:00:00 2001
+From: trik <marco.marche@gmail.com>
+Date: Wed, 15 Mar 2023 11:04:25 +0100
+Subject: [PATCH] ...
+
+---
+ .../TOOLCHAIN_GCC_ARM/STM32H747xI_CM7.ld           | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/targets/TARGET_STM/TARGET_STM32H7/TARGET_STM32H747xI/TARGET_STM32H747xI_CM7/TOOLCHAIN_GCC_ARM/STM32H747xI_CM7.ld b/targets/TARGET_STM/TARGET_STM32H7/TARGET_STM32H747xI/TARGET_STM32H747xI_CM7/TOOLCHAIN_GCC_ARM/STM32H747xI_CM7.ld
+index e026a61d4a..df6176641e 100644
+--- a/targets/TARGET_STM/TARGET_STM32H7/TARGET_STM32H747xI/TARGET_STM32H747xI_CM7/TOOLCHAIN_GCC_ARM/STM32H747xI_CM7.ld
++++ b/targets/TARGET_STM/TARGET_STM32H7/TARGET_STM32H747xI/TARGET_STM32H747xI_CM7/TOOLCHAIN_GCC_ARM/STM32H747xI_CM7.ld
+@@ -35,6 +35,8 @@
+ /* Round up VECTORS_SIZE to 8 bytes */
+ #define VECTORS_SIZE  (((NVIC_NUM_VECTORS * 4) + 7) & 0xFFFFFFF8)
+
++M_CRASH_DATA_RAM_SIZE = 0x100;
++
+ MEMORY
+ {
+   FLASH (rx)     : ORIGIN = MBED_APP_START, LENGTH = MBED_APP_SIZE
+@@ -158,6 +160,18 @@ SECTIONS
+     __etext = .;
+     _sidata = .;
+     
++    .crash_data_ram :
++    {
++        . = ALIGN(8);
++        __CRASH_DATA_RAM__ = .;
++        __CRASH_DATA_RAM_START__ = .; /* Create a global symbol at data start */
++        KEEP(*(.keep.crash_data_ram))
++        *(.m_crash_data_ram)     /* This is a user defined section */
++        . += M_CRASH_DATA_RAM_SIZE;
++        . = ALIGN(8);
++        __CRASH_DATA_RAM_END__ = .; /* Define a global symbol at data end */
++    } > DTCMRAM
++
+     .data : AT (__etext)
+     {
+         __data_start__ = .;
+--
+2.25.1
+
