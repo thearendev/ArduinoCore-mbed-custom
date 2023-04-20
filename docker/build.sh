@@ -12,7 +12,7 @@ PATCHES_DIR="/patches"
 ARDUINO_PATCHES_DIR="${PATCHES_DIR}/arduino"
 MBED_PATCHES_DIR="${PATCHES_DIR}/mbed"
 BUILD_VARIANTS=("NICLA" "ARDUINO_NANO33BLE" "PORTENTA_H7_M7")
-CORE_MBED_VERSION="3.5.6"
+CORE_MBED_VERSION="3.5.7"
 MBED_OS_DIR="/tmp/mbed-os-program/mbed-os"
 
 curl -sSL "https://github.com/arduino/ArduinoCore-mbed/tarball/${CORE_MBED_HASH}" | tar --strip-components 1 -x -z
