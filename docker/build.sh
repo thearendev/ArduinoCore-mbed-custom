@@ -2,7 +2,7 @@
 
 CORE_MBED_HASH=f6f20ca
 API_HASH=844e4bf
-MBED_OS_VERSION="mbed-os-6.17.0"
+MBED_OS_VERSION="d0ca14e4fe58c6e7096392d70edc9fd2a0d320ae"
 
 set -e
 
