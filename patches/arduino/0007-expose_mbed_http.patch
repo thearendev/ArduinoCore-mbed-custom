@@ -1,0 +1,30 @@
+diff --git a/libraries/SocketWrapper/src/SocketHelpers.cpp b/libraries/SocketWrapper/src/SocketHelpers.cpp
+index 57626e7..590984c 100644
+--- a/libraries/SocketWrapper/src/SocketHelpers.cpp
++++ b/libraries/SocketWrapper/src/SocketHelpers.cpp
+@@ -121,11 +121,6 @@ SocketAddress arduino::MbedSocketClass::socketAddressFromIpAddress(arduino::IPAd
+ }
+ 
+ 
+-// Download helper
+-
+-#include "utility/http_request.h"
+-#include "utility/https_request.h"
+-
+ void MbedSocketClass::setFeedWatchdogFunc(voidFuncPtr func) {
+   _feed_watchdog_func = func;
+ }
+diff --git a/libraries/SocketWrapper/src/SocketHelpers.h b/libraries/SocketWrapper/src/SocketHelpers.h
+index 52b2ff7..91cb51d 100644
+--- a/libraries/SocketWrapper/src/SocketHelpers.h
++++ b/libraries/SocketWrapper/src/SocketHelpers.h
+@@ -20,6 +20,9 @@
+ #include "Arduino.h"
+ #include "netsocket/NetworkInterface.h"
+ 
++#include "utility/http_request.h"
++#include "utility/https_request.h"
++
+ namespace arduino {
+ 
+ class MbedSocketClass {
