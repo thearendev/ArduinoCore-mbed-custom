@@ -1,0 +1,13 @@
+diff --git a/connectivity/lwipstack/source/LWIPStack.cpp b/connectivity/lwipstack/source/LWIPStack.cpp
+index 210b6e1..6a79b98 100644
+--- a/connectivity/lwipstack/source/LWIPStack.cpp
++++ b/connectivity/lwipstack/source/LWIPStack.cpp
+@@ -355,7 +355,7 @@ nsapi_error_t LWIP::socket_connect(nsapi_socket_t handle, const SocketAddress &a
+         return NSAPI_ERROR_PARAMETER;
+     }
+ 
+-    netconn_set_nonblocking(s->conn, false);
++    // netconn_set_nonblocking(s->conn, false);
+     err_t err = netconn_connect(s->conn, &ip_addr, address.get_port());
+     netconn_set_nonblocking(s->conn, true);
+ 
