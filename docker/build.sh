@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-CORE_MBED_HASH=b21c7bfa98f4bc5801f09efbb53565a0fab7b90c
-API_HASH=9fdac14
+CORE_MBED_HASH=1399d6477548f3f5585155652511d68d3ef85951
+API_HASH=4a02bfc
 MBED_OS_VERSION=7e16b0044e9e44778f04897343cdc1f631b84d29
 
 set -e
@@ -12,7 +12,7 @@ PATCHES_DIR="/patches"
 ARDUINO_PATCHES_DIR="${PATCHES_DIR}/arduino"
 MBED_PATCHES_DIR="${PATCHES_DIR}/mbed"
 BUILD_VARIANTS=("NICLA" "ARDUINO_NANO33BLE" "PORTENTA_H7_M7")
-CORE_MBED_VERSION="4.1.3"
+CORE_MBED_VERSION="4.1.5"
 MBED_OS_DIR="/tmp/mbed-os-program/mbed-os"
 
 curl -sSL "https://github.com/arduino/ArduinoCore-mbed/tarball/${CORE_MBED_HASH}" | tar --strip-components 1 -x -z
