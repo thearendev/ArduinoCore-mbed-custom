@@ -1,0 +1,5 @@
+# Keep patch and shell files LF so they apply/run identically on macOS (BSD
+# patch/tools) and inside the Docker Ubuntu build (GNU tools). CRLF in a patch
+# breaks context matching under BSD patch.
+*.patch text eol=lf
+*.sh    text eol=lf

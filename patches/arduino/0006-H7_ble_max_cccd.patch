@@ -13,8 +13,8 @@ index 5f9a7a00..d24daa35 100644
 +++ b/variants/PORTENTA_H7_M7/conf/mbed_app.json
 @@ -15,6 +15,8 @@
        "cordio.max-connections": 1,
-       "cordio.desired-att-mtu": 251,
-       "cordio.rx-acl-buffer-size": 255,
+       "cordio.desired-att-mtu": 247,
+       "cordio.rx-acl-buffer-size": 251,
 +      "ble-api-implementation.max-characteristic-authorisation-count": 50,
 +      "ble-api-implementation.max-cccd-count": 50,
        "cellular.debug-at": true,

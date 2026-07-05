@@ -1,0 +1,23 @@
+Fix undefined MBED_CONF_QSPI_NUM_STATUS_REGISTER in QSPIFBlockDevice.
+
+The pinned mbed-os master (d723bf9) references MBED_CONF_QSPI_NUM_STATUS_REGISTER
+in QSPIFBlockDevice::_handle_vendor_quirks() (Macronix case), but the qspif
+mbed_lib.json defines the parameter under the "qspif" library, so the generated
+macro is MBED_CONF_QSPIF_QSPI_NUM_STATUS_REGISTER. This makes the H7 build fail
+with "'MBED_CONF_QSPI_NUM_STATUS_REGISTER' was not declared in this scope".
+
+Arduino core patch 0190 (QSPI Adesto quirks) would normally reconcile this file,
+but it does not apply against this newer mbed-os. Correct the reference to the
+macro that is actually defined.
+
+diff --git a/storage/blockdevice/COMPONENT_QSPIF/source/QSPIFBlockDevice.cpp b/storage/blockdevice/COMPONENT_QSPIF/source/QSPIFBlockDevice.cpp
+--- a/storage/blockdevice/COMPONENT_QSPIF/source/QSPIFBlockDevice.cpp
++++ b/storage/blockdevice/COMPONENT_QSPIF/source/QSPIFBlockDevice.cpp
+@@ -1093,7 +1093,7 @@ int QSPIFBlockDevice::_handle_vendor_quirks()
+             tr_debug("Applying quirks for macronix");
+             _needs_fast_mode = true;
+-            _num_status_registers = MBED_CONF_QSPI_NUM_STATUS_REGISTER;
++            _num_status_registers = MBED_CONF_QSPIF_QSPI_NUM_STATUS_REGISTER;
+             _read_status_reg_2_inst = QSPIF_INST_RDCR;
+             _attempt_4_byte_addressing = false;
+             break;
