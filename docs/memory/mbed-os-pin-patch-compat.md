@@ -1,0 +1,16 @@
+---
+name: mbed-os-pin-patch-compat
+description: Why 4.6.0 bootloops on Portenta H7 — mbed-os pin d723bf9 silently breaks 16 upstream core patches; keep MBED_OS_VERSION=7e16b00
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: 6817df72-d345-4406-8ad3-492dbce7ce71
+---
+
+The 4.6.0 core (and 4.4.1/4.5.0, never Portenta-tested) bootloops on Portenta H7 because `MBED_OS_VERSION=d723bf9` (bumped in 4.4.1, Oct 2024 ARMmbed master) is incompatible with ArduinoCore-mbed's own `patches/` set: `mbed-os-to-arduino` applies them with `git apply` via `xargs` under `set +e`, so failing patches are skipped whole and silently. Against d723bf9, 16 of 267 patches fail (vs 2 benign failures — 0171 CAN, 0206 I2C — on the known-good pin). The killer is `0187-QSPI-Disable-fast-mode-for-vendor-ID-0xc22018.patch`: the Portenta's Macronix MX25L128 QSPI flash (JEDEC c2 20 18) must not use fast mode; without 0187 the QSPIF driver sets `_needs_fast_mode=true`, WiFi/BLE firmware reads from QSPI fail at radio init → mbed fatal error → crash-capture patch's `fatal-error-auto-reboot-enabled=1` reboots instantly → bootloop. The `MBED_CONF_QSPI_NUM_STATUS_REGISTER` compile error "fixed" by `patches/mbed/0003` was a symptom of the same skipped patch (the local fix made it compile but kept fast mode enabled). Also lost with d723bf9: `.openamp_section`/`.resource_table` in the H7 linker script (breaks M4/RPC), ADC clock patches (0077/0085/0185/0214), plus native d723bf9 enables 480MHz overdrive (`TARGET_STM32H7_480MHZ`) absent in 4.1.5.
+
+**Why:** last known-good Portenta build is 4.1.5 (core 1399d64 + mbed-os 7e16b00, May 2024). Replay-verified: the new core b4ad4e7's full 267-patch set applies cleanly on 7e16b00 (same 2 benign failures), local mbed patches 0001/0002 apply, Macronix quirk correct, bad macro gone.
+
+**How to apply:** keep `MBED_OS_VERSION=7e16b0044e9e44778f04897343cdc1f631b84d29` in `docker/build.sh` and `build_local.sh` when bumping `CORE_MBED_HASH`; delete `patches/mbed/0003-fix_qspif_num_status_register_macro.patch` when doing so (on 7e16b00 its hunk no longer matches and the `set -e` patch loop would abort the build). To vet any future pin bump offline: shallow-clone mbed-os at the pin, `git apply` the core's `patches/*` in sorted order, and diff the failure list against the allowlist {0171, 0206}.
+
+Operational gotchas (learned 2026-07-06): `run.sh` runs `/build.sh` **baked into the container image** (Dockerfile `COPY docker/build.sh /`) — after editing `docker/build.sh` you MUST re-run `build_image.sh` or the container silently builds with the old pins; `build_local.sh` has its own separate copy of the pin constants. This machine uses podman (build_image.sh/run.sh were switched from docker). A build's mbed-os pin can be fingerprinted from the packaged variant: `TARGET_STM32H7_480MHZ` in `variants/PORTENTA_H7_M7/defines.txt` and `MBED_CONF_QSPIF_QSPI_NUM_STATUS_REGISTER` in `mbed_config.h` exist only on d723bf9 (broken pin); the `.openamp_section`/`.resource_table` block in `linker_script.ld` exists only on 7e16b00 (good pin). The crash-capture RAM section (`.crash_data_ram` in DTCMRAM, local patch 0001) is byte-identical between working 4.1.5 and broken 4.6.0 — ruled out as a bootloop cause.
